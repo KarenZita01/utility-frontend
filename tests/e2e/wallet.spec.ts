@@ -16,12 +16,12 @@ test.describe("Wallet Connection Flow", () => {
     const connectBtn = page.getByRole("button", { name: /connect wallet/i });
     await connectBtn.click();
 
-    await expect(page.getByText(/^G[A-Z0-9]{5}…[A-Z0-9]{4}$/)).toBeVisible();
+    await expect(page.getByText(/^G[A-Z0-9]{5}\.{3}[A-Z0-9]{4}$/)).toBeVisible();
   });
 
   test("should disconnect wallet and show connect button", async ({ page }) => {
     await page.getByRole("button", { name: /connect wallet/i }).click();
-    await expect(page.getByText(/^G[A-Z0-9]{5}…[A-Z0-9]{4}$/)).toBeVisible();
+    await expect(page.getByText(/^G[A-Z0-9]{5}\.{3}[A-Z0-9]{4}$/)).toBeVisible();
 
     await page.getByRole("button", { name: /disconnect/i }).click();
     await expect(page.getByRole("button", { name: /connect wallet/i })).toBeVisible();
@@ -29,7 +29,7 @@ test.describe("Wallet Connection Flow", () => {
 
   test("should persist wallet session across page reload", async ({ page }) => {
     await page.getByRole("button", { name: /connect wallet/i }).click();
-    const address = await page.getByText(/^G[A-Z0-9]{5}…[A-Z0-9]{4}$/).textContent();
+    const address = await page.getByText(/^G[A-Z0-9]{5}\.{3}[A-Z0-9]{4}$/).textContent();
 
     await page.reload();
     await expect(page.getByText(address!)).toBeVisible();
